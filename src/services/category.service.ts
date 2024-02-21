@@ -1,5 +1,5 @@
 import Categories from '../models/category.model'
-import { Category, CategoryModel } from '../types/category.type'
+import { Category } from '../types/category.type'
 import boom from '@hapi/boom'
 
 class CategoryService {

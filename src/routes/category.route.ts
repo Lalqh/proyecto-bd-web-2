@@ -8,11 +8,10 @@ const service = new CategoryService()
 router.post('/', async (req, res) => {
   const category: Category = req.body
   const newCategory = await service.create(category)
-
   res.status(201).json(newCategory)
 })
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (_req, res, next) => {
   try {
     const categories = await service.findAll()
     res.status(200).json(categories)
