@@ -11,10 +11,15 @@ router.post('/', async (req, res) => {
   res.status(201).json(newCategory)
 })
 
-router.get('/', async (_req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const categories = await service.findAll()
-    res.status(200).json(categories)
+    if (req.query.name) {
+      const category = await service.findByName(req.query.name as string)
+      res.status(200).json(category)
+    } else {
+      const categories = await service.findAll()
+      res.status(200).json(categories)
+    }
   } catch (error) {
     next(error)
   }
@@ -23,15 +28,6 @@ router.get('/', async (_req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const category = await service.findById(req.params.id)
-    res.status(200).json(category)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/', async (req, res, next) => {
-  try {
-    const category = await service.findById(req.query.name as string)
     res.status(200).json(category)
   } catch (error) {
     next(error)

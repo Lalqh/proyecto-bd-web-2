@@ -43,6 +43,8 @@ class CategoryService {
     if (!category) {
       throw boom.notFound('Category not found')
     }
+    
+    return category
   }
 }
 
