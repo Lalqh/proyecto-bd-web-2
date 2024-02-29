@@ -30,8 +30,7 @@ class UserService {
     if (!user) {
       throw boom.notFound('User not found')
     }
-
-    return user
+    return {name: user.name, email: user.email, createdAt: user.createdAt, id: user._id}
   }
 }
 
