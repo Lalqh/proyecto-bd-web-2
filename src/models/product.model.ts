@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose'
-import { Product, ProductModel, ProductMethods } from '../types/products.type'
+import { Product, ProductModel,  } from '../types/product.type'
+import { CATEGORY_REFENCE } from '../types/category.type'
 
-const Products = new Schema<Product, ProductModel, ProductMethods>({
+const Products = new Schema<Product, ProductModel>({
   name: {
     type: String,
     required: true,
@@ -27,7 +28,7 @@ const Products = new Schema<Product, ProductModel, ProductMethods>({
   },
   category: {
     type: Schema.Types.ObjectId,
-    ref: 'Category'
+    ref: CATEGORY_REFENCE
   },
   createdAt: {
     type: Date,
