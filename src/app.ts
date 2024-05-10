@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 import {
   logErrors,
   errorHandler,
@@ -20,6 +21,7 @@ const connectDB = () => {
 
 app.use(express.json())
 app.use(passport.initialize())
+app.use(cors())
 routerApi(app)
 
 app.listen(port, () => {

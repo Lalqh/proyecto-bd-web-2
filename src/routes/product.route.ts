@@ -42,4 +42,28 @@ router.get(
   }
 )
 
+router.get(
+  '/products',
+  async (req, res, next) => {
+    try {
+      if (req.query.name) {
+        const product = await service.findByName(req.query.name as string)
+        res.status(200).json(product)
+      } else if (req.query.category) {
+        const product = await service.findByCategory(
+          req.query.category as string
+        )
+        res.status(200).json(product)
+      } else if (req.query.id) {
+        const product = await service.findById(req.query.id as string)
+        res.status(200).json(product)
+      }
+      const product = await service.findAll()
+      res.status(200).json(product)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
 export default router
