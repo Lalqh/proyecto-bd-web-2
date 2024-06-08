@@ -34,6 +34,20 @@ router.get(
   }
 )
 
+router.get('/categories', async (req, res, next) => {
+  try {
+    if (req.query.name) {
+      const category = await service.findByName(req.query.name as string)
+      res.status(200).json(category)
+    } else {
+      const categories = await service.findAll()
+      res.status(200).json(categories)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
