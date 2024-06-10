@@ -20,6 +20,41 @@ class ProductService {
     ])
   }
 
+  async update(product: Product, categoryId: ObjectId) {
+    let updatedProduct = await Products.findByIdAndUpdate(
+      product.id,
+      {
+        ...product,
+        category: categoryId
+      },
+      { new: true } 
+    ).catch((error) => {
+      console.log('Could not update product', error)
+    })
+  
+    if (!updatedProduct) {
+      throw boom.notFound('Product not found')
+    }
+  
+    const existingProduct = await this.findById((updatedProduct as any)._id)
+  
+    return existingProduct
+  }
+
+  async delete(productId: string) {
+    const deletedProduct = await Products.findByIdAndDelete(productId).catch((error) => {
+      console.log('Could not delete product', error)
+    })
+  
+    if (!deletedProduct) {
+      throw boom.notFound('Product not found')
+    }
+  
+    return { message: 'Product successfully deleted' }
+  }
+
+
+
   async findAll() {
     const product = await Products.find()
       .populate([{ path: 'category', strictPopulate: false }])
