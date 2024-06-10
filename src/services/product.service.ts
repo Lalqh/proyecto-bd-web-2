@@ -27,33 +27,33 @@ class ProductService {
         ...product,
         category: categoryId
       },
-      { new: true } 
+      { new: true }
     ).catch((error) => {
       console.log('Could not update product', error)
     })
-  
+
     if (!updatedProduct) {
       throw boom.notFound('Product not found')
     }
-  
+
     const existingProduct = await this.findById((updatedProduct as any)._id)
-  
+
     return existingProduct
   }
 
   async delete(productId: string) {
-    const deletedProduct = await Products.findByIdAndDelete(productId).catch((error) => {
-      console.log('Could not delete product', error)
-    })
-  
+    const deletedProduct = await Products.findByIdAndDelete(productId).catch(
+      (error) => {
+        console.log('Could not delete product', error)
+      }
+    )
+
     if (!deletedProduct) {
       throw boom.notFound('Product not found')
     }
-  
+
     return { message: 'Product successfully deleted' }
   }
-
-
 
   async findAll() {
     const product = await Products.find()
@@ -108,7 +108,7 @@ class ProductService {
     }
 
     // Buscar los productos que pertenecen a la categoría encontrada
-    const products = await Products.find({ category: categories._id})
+    const products = await Products.find({ category: categories._id })
       .populate([{ path: 'category', strictPopulate: false }])
       .catch((error) => {
         console.log('Error while connecting to the DB', error)
